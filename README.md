@@ -92,14 +92,14 @@ The code involves some hand segmentation (based on the data we used) for each fr
 #### Extracting frames form training videos
 
 ```bash
-python3 "video-to-frame.py" train_videos train_frames
+python "video-to-frame.py" train_videos train_frames
 ```
 Extract frames from gestures in `train_videos` to `train_frames`.
 
 #### Extracting frames form test videos
 
 ```bash
-python3 "video-to-frame.py" test_videos test_frames
+python "video-to-frame.py" test_videos test_frames
 ```
 Extract frames from gestures in `test_videos` to `test_frames`.
 
@@ -109,11 +109,11 @@ Extract frames from gestures in `test_videos` to `test_frames`.
    ```shell
    curl -LO https://github.com/tensorflow/hub/raw/master/examples/image_retraining/retrain.py
    ```
-  Note: This link may change in the future. Please refer [Tensorflow retrain tutorial](https://www.tensorflow.org/tutorials/image_retraining#training_on_flowers)
+  Note: This link may change in the future. Please refer [Tensorflow retrain tutorial]()
 - Run the following command to retrain the inception model.
   
     ```shell
-    python3 retrain.py --bottleneck_dir=bottlenecks --summaries_dir=training_summaries/long --output_graph=retrained_graph.pb --output_labels=retrained_labels.txt --image_dir=train_frames
+    python retrain.py --bottleneck_dir=bottlenecks --summaries_dir=training_summaries/long --output_graph=retrained_graph.pb --output_labels=retrained_labels.txt --image_dir=train_frames
     ```
 
 This will create two file `retrained_labels.txt` and `retrained_graph.pb`
@@ -162,7 +162,7 @@ For more information about the above command refer [here](https://codelabs.devel
     **On Training Data**
 
     ```shell
-    python3 predict_spatial.py retrained_graph.pb train_frames --batch=100
+    python predict_spatial.py retrained_graph.pb train_frames --batch=100
     ```
 
     This will create a file `predicted-frames-final_result-train.pkl` that will be used by RNN.
@@ -170,7 +170,7 @@ For more information about the above command refer [here](https://codelabs.devel
     **On Test Data**
 
     ```shell
-    python3 predict_spatial.py retrained_graph.pb test_frames --batch=100 --test
+    python predict_spatial.py retrained_graph.pb test_frames --batch=100 --test
     ```
 
     This will create a file `predicted-frames-final_result-test.pkl` that will be used by RNN. 
@@ -182,7 +182,7 @@ For more information about the above command refer [here](https://codelabs.devel
     **On Training Data**
 
     ```shell
-    python3 predict_spatial.py retrained_graph.pb train_frames \
+    python predict_spatial.py retrained_graph.pb train_frames \
     --output_layer="module_apply_default/InceptionV3/Logits/GlobalPool" \
     --batch=100
     ```
@@ -192,7 +192,7 @@ For more information about the above command refer [here](https://codelabs.devel
     **On Test Data**
 
     ```shell
-    python3 predict_spatial.py retrained_graph.pb train_frames \
+    python predict_spatial.py retrained_graph.pb train_frames \
             --output_layer="module_apply_default/InceptionV3/Logits/GlobalPool" \
             --batch=100 \
             --test
@@ -229,10 +229,10 @@ For more information about the above command refer [here](https://codelabs.devel
                           batch Size, default=32
     ```
 
-#### Approach 1
+#### Approach 1 
 
 ```bash
-python3 rnn_train.py predicted-frames-final_result-train.pkl non_pool.model
+python rnn_train.py predicted-frames-final_result-train.pkl non_pool.model
 ```
 
 This will train the RNN model on the **softmax based representation** of gestures for 10 epochs and save the model with name `non_pool.model` in a folder named checkpoints.
@@ -240,7 +240,7 @@ This will train the RNN model on the **softmax based representation** of gesture
 #### Approach 2
 
 ```bash
-python3 rnn_train.py predicted-frames-GlobalPool-train.pkl pool.model
+python rnn_train.py predicted-frames-GlobalPool-train.pkl pool.model
 ```
 
 This will train the RNN model on the **pool layer based representation** of gestures for 10 epochs and save the model with name `pool.model` in a folder named checkpoints.
@@ -277,7 +277,7 @@ This will train the RNN model on the **pool layer based representation** of gest
 #### Approach 1
 
 ```bash
-python3 rnn_eval.py predicted-frames-final_result-test.pkl non_pool.model
+python rnn_eval.py predicted-frames-final_result-test.pkl non_pool.model
 ```
 
 This will use the `non_pool.model` to predict the labels of the **softmax based representation** of the test videos.
@@ -286,7 +286,7 @@ Predictions and corresponding gold labels for each test video will be dumped in 
 #### Approach 2
 
 ```bash
-python3 rnn_eval.py predicted-frames-GlobalPool-test.pkl pool.model
+python rnn_eval.py predicted-frames-GlobalPool-test.pkl pool.model
 ```
 
 This will use the `pool.model` to predict the labels of the **pool layer based representation** of the test videos.

@@ -13,7 +13,7 @@ import sys
 def load_labels(label_file):
     label = {}
     count = 0
-    proto_as_ascii_lines = tf.gfile.GFile(label_file).readlines()
+    proto_as_ascii_lines = tf.compat.v1.gfile.GFile(label_file).readlines()
     for l in proto_as_ascii_lines:
         label[l.strip()] = count
         count += 1
