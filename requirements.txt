@@ -1,0 +1,8 @@
+fastdtw==0.3.4
+mediapipe==0.8.9.1
+numpy
+opencv-contrib-python==4.5.4.60
+opencv-python
+pandas
+pytube
+tdqm==0.0.1
