@@ -41,9 +41,9 @@ if __name__ == "__main__":
             webcam_manager.update(frame, results, sign_detected, is_recording)
 
             pressedKey = cv2.waitKey(1) & 0xFF
-            if pressedKey == ord("r"):  # Record pressing r
-                sign_recorder.record()
-            elif pressedKey == ord("q"):  # Break pressing q
+            sign_recorder.record()
+            
+            if pressedKey == ord("q"):  # Break pressing q
                 break
 
         cap.release()
