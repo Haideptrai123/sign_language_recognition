@@ -38,15 +38,18 @@ def load_dataset():
 def load_reference_signs(videos):
     reference_signs = {"name": [], "sign_model": [], "distance": []}
     for video_name in videos:
-        sign_name = video_name.split("-")[0]
-        path = os.path.join("data", "dataset", sign_name, video_name)
+        try:
+            sign_name = video_name.split("-")[0]
+            path = os.path.join("data", "dataset", sign_name, video_name)
 
-        left_hand_list = load_array(os.path.join(path, f"lh_{video_name}.pickle"))
-        right_hand_list = load_array(os.path.join(path, f"rh_{video_name}.pickle"))
+            left_hand_list = load_array(os.path.join(path, f"lh_{video_name}.pickle"))
+            right_hand_list = load_array(os.path.join(path, f"rh_{video_name}.pickle"))
 
-        reference_signs["name"].append(sign_name)
-        reference_signs["sign_model"].append(SignModel(left_hand_list, right_hand_list))
-        reference_signs["distance"].append(0)
+            reference_signs["name"].append(sign_name)
+            reference_signs["sign_model"].append(SignModel(left_hand_list, right_hand_list))
+            reference_signs["distance"].append(0)
+        except:
+            continue
     
     reference_signs = pd.DataFrame(reference_signs, dtype=object)
     print(
