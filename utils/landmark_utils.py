@@ -41,7 +41,7 @@ def save_landmarks_from_video(video_name):
 
     # Set the Video stream
     cap = cv2.VideoCapture(
-        os.path.join("C:",os.sep,"Users","admin\Downloads\Compressed\Sharingan_v2.0","data", "videos", sign_name, video_name + ".mp4")
+        os.path.join("data", "videos", sign_name, video_name + ".mp4")
     )
     # Need to change filepath (fuck Windows praise Linux) 
     with mp.solutions.holistic.Holistic(

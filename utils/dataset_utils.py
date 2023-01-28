@@ -24,15 +24,24 @@ def load_dataset():
     # Create the dataset from the reference videos
     videos_not_in_dataset = list(set(videos).difference(set(dataset)))
     n = len(videos_not_in_dataset)
+    print(videos_not_in_dataset)
     if n > 0:
         print(f"\nExtracting landmarks from new videos: {n} videos detected\n")
+        video_cant_extract = []
         for idx in tqdm(range(n)):
-            try:
+            try: 
                 save_landmarks_from_video(videos_not_in_dataset[idx])
             except:
+                video_cant_extract.append(videos_not_in_dataset[idx])
                 continue
-
+        delete_list_of_videos(video_cant_extract)
+        print(f"\nDeleted {len(video_cant_extract)} videos can't be extracted\n")
     return videos
+
+def delete_list_of_videos(list):
+    n = len(list)
+    for i in range(n):
+        os.remove(os.path.join("data", "videos", list[i].split("-")[0], list[i] + ".mp4"))
 
 
 def load_reference_signs(videos):
