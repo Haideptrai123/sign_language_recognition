@@ -59,7 +59,6 @@ def save_landmarks_from_video(video_name):
                 landmark_list["left_hand"].append(left_hand)
                 landmark_list["right_hand"].append(right_hand)
             else:
-                print('cant extract')
                 break
         cap.release()
 

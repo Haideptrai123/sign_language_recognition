@@ -20,16 +20,17 @@ def load_dataset():
         for file_name in files
         if file_name.endswith(".pickle") and file_name.startswith("pose_")
     ]
-    print(videos)
 
     # Create the dataset from the reference videos
     videos_not_in_dataset = list(set(videos).difference(set(dataset)))
     n = len(videos_not_in_dataset)
     if n > 0:
         print(f"\nExtracting landmarks from new videos: {n} videos detected\n")
-        print(videos_not_in_dataset)
         for idx in tqdm(range(n)):
-            save_landmarks_from_video(videos_not_in_dataset[idx])
+            try:
+                save_landmarks_from_video(videos_not_in_dataset[idx])
+            except:
+                continue
 
     return videos
 
