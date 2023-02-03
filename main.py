@@ -1,5 +1,6 @@
 import cv2
 import mediapipe
+import pickle
 
 from utils.dataset_utils import load_dataset, load_reference_signs
 from utils.mediapipe_utils import mediapipe_detection
@@ -9,13 +10,16 @@ from webcam_manager import WebcamManager
 
 if __name__ == "__main__":
     # Create dataset of the videos where landmarks have not been extracted yet
-    videos = load_dataset()
+    # videos = load_dataset()
 
     # Create a DataFrame of reference signs (name: str, model: SignModel, distance: int)
-    reference_signs = load_reference_signs(videos)
+    # reference_signs = load_reference_signs(videos)
 
     # Object that stores mediapipe results and computes sign similarities
-    sign_recorder = SignRecorder(reference_signs)
+    # sign_recorder = SignRecorder(reference_signs)
+
+    with open('ref.pkl', 'rb') as inp:
+        sign_recorder = pickle.load(inp)
 
     # Object that draws keypoints & displays results
     webcam_manager = WebcamManager()
@@ -41,9 +45,11 @@ if __name__ == "__main__":
             webcam_manager.update(frame, results, sign_detected, is_recording)
 
             pressedKey = cv2.waitKey(1) & 0xFF
-            sign_recorder.record()
             
-            if pressedKey == ord("q"):  # Break pressing q
+            if pressedKey == ord('r'):
+                sign_recorder.record()
+            
+            elif pressedKey == ord("q"):  # Break pressing q
                 break
 
         cap.release()

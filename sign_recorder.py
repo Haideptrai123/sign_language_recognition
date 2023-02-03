@@ -79,9 +79,10 @@ class SignRecorder(object):
         """
         # Get the list (of size batch_size) of the most similar reference signs
         sign_names = self.reference_signs.iloc[:batch_size]["name"].values
+
         # Count the occurrences of each sign and sort them by descending order
         sign_counter = Counter(sign_names).most_common()
-        print(sign_counter)
+        print(self.reference_signs)
 
         predicted_sign, count = sign_counter[0]
         if count / batch_size < threshold:
