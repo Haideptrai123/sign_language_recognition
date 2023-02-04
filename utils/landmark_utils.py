@@ -72,6 +72,7 @@ def save_landmarks_from_video(video_name):
     if not os.path.exists(data_path):
         os.mkdir(data_path)
 
+
     # Saving the landmark_list in the correct folder
     save_array(
         landmark_list["pose"], os.path.join(data_path, f"pose_{video_name}.pickle")

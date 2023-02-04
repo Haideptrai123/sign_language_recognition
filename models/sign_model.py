@@ -40,4 +40,5 @@ class SignModel(object):
 
             hand_gesture = HandModel(hand_list[frame_idx])
             embedding.append(hand_gesture.feature_vector)
+        print(embedding)
         return embedding

@@ -82,7 +82,6 @@ class SignRecorder(object):
 
         # Count the occurrences of each sign and sort them by descending order
         sign_counter = Counter(sign_names).most_common()
-        print(self.reference_signs)
 
         predicted_sign, count = sign_counter[0]
         if count / batch_size < threshold:

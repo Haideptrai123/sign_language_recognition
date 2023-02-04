@@ -8,6 +8,16 @@ from utils.landmark_utils import save_landmarks_from_video, load_array
 
 
 def load_dataset():
+    dataset = [
+        file_name.replace(".pickle", "").replace("pose_", "")
+        for root, dirs, files in os.walk(os.path.join("data", "dataset"))
+        for file_name in files
+        if file_name.endswith(".pickle") and file_name.startswith("pose_")
+    ]
+
+    return dataset
+
+def create_dataset():
     videos = [
         file_name.replace(".mp4", "")
         for root, dirs, files in os.walk(os.path.join("data", "videos"))
@@ -24,7 +34,6 @@ def load_dataset():
     # Create the dataset from the reference videos
     videos_not_in_dataset = list(set(videos).difference(set(dataset)))
     n = len(videos_not_in_dataset)
-    print(videos_not_in_dataset)
     if n > 0:
         print(f"\nExtracting landmarks from new videos: {n} videos detected\n")
         video_cant_extract = []
@@ -34,9 +43,17 @@ def load_dataset():
             except:
                 video_cant_extract.append(videos_not_in_dataset[idx])
                 continue
-        delete_list_of_videos(video_cant_extract)
-        print(f"\nDeleted {len(video_cant_extract)} videos can't be extracted\n")
-    return videos
+
+        # while True:
+        #     x = input("\nDelete videos can not be extracted? (y/n)\n").lower()
+        #     if x == 'y':
+        #         delete_list_of_videos(video_cant_extract)
+        #         print(f"\nDeleted {len(video_cant_extract)} videos can not be extracted.\n")
+        #         break
+        #     elif x == 'n':
+        #         break
+        #     else: continue
+
 
 def delete_list_of_videos(list):
     n = len(list)
